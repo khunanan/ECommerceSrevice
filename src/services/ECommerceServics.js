@@ -28,21 +28,7 @@ async function getOrdersbyStatus(page = 1, listPerPage = 10, status = "%") {
   );
   const data = helper.emptyOrRows(rows);
 
-  const groupData = data.prototype.groupBy(({id})=>id)
-  const meta = { page };
-
-  return {
-    groupData,
-    meta
-  }
-}
-
-async function getMenuBycategoryName(page = 1, listPerPage = 10, categoryName = "a") {
-  const offset = helper.getOffset(page, listPerPage);
-  const rows = await db.query(
-    `SELECT * FROM menu WHERE categories='${categoryName}' LIMIT ${offset},${listPerPage}`
-  );
-  const data = helper.emptyOrRows(rows);
+  data.prototype.group((id) => id);
   const meta = { page };
 
   return {
@@ -51,49 +37,20 @@ async function getMenuBycategoryName(page = 1, listPerPage = 10, categoryName = 
   }
 }
 
-async function getMenuByPrice(page = 1, listPerPage = 10, startPrice = 0, endPrice = 10000) {
-  const offset = helper.getOffset(page, listPerPage);
+async function createOrder(address, status = "PAYMENT_PENDING") {
+
   const rows = await db.query(
-    `SELECT * FROM menu WHERE price >= ${startPrice} AND price <= ${endPrice} LIMIT ${offset},${listPerPage}`
+    `INSERT INTO orders (id, address, status) VALUES (NULL, '${address}', '${status}')`
   );
+  console.log(rows);
   const data = helper.emptyOrRows(rows);
-  const meta = { page };
 
   return {
-    data,
-    meta
-  }
-}
-
-async function getMenuByCountAtleast(page = 1, listPerPage = 10, count = 0) {
-  const offset = helper.getOffset(page, listPerPage);
-  const rows = await db.query(
-    `SELECT * FROM menu WHERE count >= ${count} LIMIT ${offset},${listPerPage}`
-  );
-  const data = helper.emptyOrRows(rows);
-  const meta = { page };
-
-  return {
-    data,
-    meta
-  }
-}
-
-async function getMenuByCountLessThan(page = 1, listPerPage = 10, count = 0) {
-  const offset = helper.getOffset(page, listPerPage);
-  const rows = await db.query(
-    `SELECT * FROM menu WHERE count < ${count} LIMIT ${offset},${listPerPage}`
-  );
-  const data = helper.emptyOrRows(rows);
-  const meta = { page };
-
-  return {
-    data,
-    meta
+    data
   }
 }
 
 module.exports = {
-  getProductListbyCondition, getOrdersbyStatus, getMenuBycategoryName, getMenuByPrice, getMenuByCountAtleast, getMenuByCountLessThan
+  getProductListbyCondition, getOrdersbyStatus, createOrder
 
 }

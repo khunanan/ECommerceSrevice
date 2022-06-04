@@ -28,61 +28,19 @@ router.get('/orders', async function (req, res, next) {
         const page = req.query.page;
         const requestSize = req.query.requestSize;
         const status = req.query.status;
-        
-        res.json(await eCommerceServics.getOrdersbyStatus(page,requestSize, status));
+
+        res.json(await eCommerceServics.getOrdersbyStatus(page, requestSize, status));
     } catch (err) {
         console.error(`Error while getting programming languages `, err.message);
         next(err);
     }
 });
 
-router.get('/categories', async function (req, res, next) {
+router.post('/createOrder', async function (req, res, next) {
     try {
-        const name = req.query.categoryName;
+        const address = req.body.address;
 
-        res.json(await menuservics.getMenuBycategoryName(req.query.page, name));
-    } catch (err) {
-        console.error(`Error while getting programming languages `, err.message);
-        next(err);
-    }
-});
-
-
-router.get('/price', async function (req, res, next) {
-    try {
-        const startPrice = req.query.startPrice;
-        const endPrice = req.query.endPrice;
-
-        if (isNaN(startPrice) || isNaN(endPrice)) {
-            res.status(400);
-            res.json({ "message": "invalid parameter" });
-        } else {
-            res.json(await menuservics.getMenuByPrice(req.query.page, startPrice, endPrice));
-        }
-    } catch (err) {
-        console.error(`Error while getting programming languages `, err.message);
-        next(err);
-    }
-});
-
-
-router.get('/dish/atleast', async function (req, res, next) {
-    try {
-        const count = req.query.count;
-
-        res.json(await menuservics.getMenuByCountAtleast(req.query.page, count));
-    } catch (err) {
-        console.error(`Error while getting programming languages `, err.message);
-        next(err);
-    }
-});
-
-
-router.get('/dish/lessthan', async function (req, res, next) {
-    try {
-        const count = req.query.count;
-
-        res.json(await menuservics.getMenuByCountLessThan(req.query.page, count));
+        res.json(await eCommerceServics.createOrder(address));
     } catch (err) {
         console.error(`Error while getting programming languages `, err.message);
         next(err);
