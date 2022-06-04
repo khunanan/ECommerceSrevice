@@ -14,7 +14,7 @@ router.get('/products', async function (req, res, next) {
             res.status(400);
             res.json({ "message": "invalid request" })
         } else {
-            res.json(await eCommerceServics.getProductListbyCondition(page, requestSize, gender, category, size));
+            res.json(await eCommerceServics.getProductListByCondition(page, requestSize, gender, category, size));
         }
 
     } catch (err) {
@@ -23,18 +23,7 @@ router.get('/products', async function (req, res, next) {
     }
 });
 
-router.get('/orders', async function (req, res, next) {
-    try {
-        const page = req.query.page;
-        const requestSize = req.query.requestSize;
-        const status = req.query.status;
 
-        res.json(await eCommerceServics.getOrdersbyStatus(page, requestSize, status));
-    } catch (err) {
-        console.error(`Error while getting programming languages `, err.message);
-        next(err);
-    }
-});
 
 router.post('/createOrder', async function (req, res, next) {
     try {
