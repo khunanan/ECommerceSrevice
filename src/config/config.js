@@ -1,7 +1,7 @@
 const config = {
   db: {
     /* don't expose password or any sensitive info, done only for demo */
-    host: "localhost",
+    host: "www.srichomthong.com",
     user: "master",
     password: "1qaz2wsx3edc",
     database: "ecommerce",
