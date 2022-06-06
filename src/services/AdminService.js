@@ -41,7 +41,7 @@ async function getOrdersByStatus(page = 1, listPerPage = 10, status = "%") {
     }
     data.push(bbb)
   });
-
+  console.log(data);
   const meta = { page };
 
   return {
@@ -49,6 +49,5 @@ async function getOrdersByStatus(page = 1, listPerPage = 10, status = "%") {
     meta
   }
 }
-
 
 module.exports = { getOrdersByStatus }
